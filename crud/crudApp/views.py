@@ -41,19 +41,19 @@ def product_create_api(request):
         }, status=status.HTTP_400_BAD_REQUEST)
 
 
-# view for retrieving one product detail
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def product_detail_api(request,id):
-     try:
-          product=Product_Category.objects.get(pk=id)
-     except Product_Category.DoesNotExist:
-          return Response({"error":"Product not found"},status=status.HTTP_400_BAD_REQUEST)     
-     if request.method == "POST":
-          serializer=ProductSerializer(product) 
-          return Response({"message":"product retrieved successfully! ","data":serializer.data},status=status.HTTP_200_OK)
-     else:
-          return  Response({"error":"Failed to  retrieved the  product !","data":serializer.errors},status=status.HTTP_200_OK)
+# # view for retrieving one product detail
+# @api_view(['POST'])
+# @permission_classes([AllowAny])
+# def product_detail_api(request,id):
+#      try:
+#           product=Product_Category.objects.get(pk=id)
+#      except Product_Category.DoesNotExist:
+#           return Response({"error":"Product not found"},status=status.HTTP_400_BAD_REQUEST)     
+#      if request.method == "POST":
+#           serializer=ProductSerializer(product) 
+#           return Response({"message":"product retrieved successfully! ","data":serializer.data},status=status.HTTP_200_OK)
+#      else:
+#           return  Response({"error":"Failed to  retrieved the  product !","data":serializer.errors},status=status.HTTP_200_OK)
 
 
 
