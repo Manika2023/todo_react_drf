@@ -17,18 +17,28 @@ def Product_list_api(request):
           return Response({"message":"product retrieved successfully!","data":serializer.data},status=status.HTTP_200_OK)
      else:
           return Response({"error":"Failed to retrieved successfully"},status=status.HTTP_400_BAD_REQUEST)     
-     
-@api_view(['POST'])     
+@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def product_create_api(request):
-     if request.method == 'POST':
-          serializer=ProductSerializer(data=request.data)
-          if serializer.is_valid():
-               serializer.save()
-               return Response({"message":"post created successfully","data":serializer.data},status=status.HTTP_201_CREATED)
-          else:
-               print(serializer.error_messages)
-               return Response({"error":"Failed to create post, please try again","data":serializer.errors},status=status.HTTP_400_BAD_REQUEST) 
+    if request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        # Check if serializer is valid before saving
+        if serializer.is_valid():
+            # Access validated data if needed
+            validated_data = serializer.validated_data            
+            # Save the serializer (create the product)
+            serializer.save()
+            # Now you can safely access `serializer.data`
+            return Response({
+                "message": "Post created successfully",
+                "data": serializer.data
+            }, status=status.HTTP_201_CREATED)
+        
+        # If serializer is not valid, return errors
+        return Response({
+            "error": "Failed to create post",
+            "data": serializer.errors
+        }, status=status.HTTP_400_BAD_REQUEST)
 
 
 # view for retrieving one product detail
@@ -48,17 +58,17 @@ def product_detail_api(request,id):
 
 
 # View to retrieve product details
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def product_detail_api(request, id):
-#     try:
-#         product = Product_Category.objects.get(pk=id)
-#         print("product code is ",product.product_code)
-#     except Product_Category.DoesNotExist:
-#         return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def product_detail_api(request, id):
+    try:
+        product = Product_Category.objects.get(pk=id)
+        print("product code is ",product.product_code)
+    except Product_Category.DoesNotExist:
+        return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
     
-#     serializer = ProductSerializer(product)
-#     return Response(serializer.data, status=status.HTTP_200_OK)
+    serializer = ProductSerializer(product)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 # View to update product details
 @api_view(['PUT'])

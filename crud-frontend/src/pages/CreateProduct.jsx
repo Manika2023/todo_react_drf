@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, NavLink,Link } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 
 export default function CreateProduct() {
   const [product_code, setProductCode] = useState("");
@@ -50,20 +50,25 @@ export default function CreateProduct() {
     <div className="container  mx-auto p-6">
       <h2 className="text-3xl text-gray-900 font-bold mb-4">Create New Post</h2>
       {error && (
-          <div className="bg-green-500 p-3 rounded-lg text-gray-50 my-3" role="alert">
-            {error}
-          </div>
-        )}
+        <div
+          className="bg-green-500 p-3 rounded-lg text-gray-50 my-3"
+          role="alert"
+        >
+          {error}
+        </div>
+      )}
 
       {message && (
-          <div className="bg-green-500 p-3 rounded-lg text-gray-50 my-3" role="alert">
-            {message}
-            <Link to="/dashboard" className="underline text-gray-100 ml-2">
-               Go Back to Dashboard
+        <div
+          className="bg-green-500 p-3 rounded-lg text-gray-50 my-3"
+          role="alert"
+        >
+          {message}
+          <Link to="/dashboard" className="underline text-gray-100 ml-2">
+            Go Back to Dashboard
           </Link>
-        
-          </div>
-        )}
+        </div>
+      )}
 
       <div className="bg-gray-100 p-6 rounded-lg shadow-md">
         <form onSubmit={handleSubmit} className="">
@@ -109,17 +114,21 @@ export default function CreateProduct() {
             />
           </div>
           <div className="mb-4">
-          <label className="block text-gray-900">Status</label>
-          <select
-            name="status"
-            value={status}
-            onChange={(e)=>setStatus(e.target.value)}
-            className="border rounded w-full py-2 px-3 bg-gray-50 text-black"
-          >
-            <option value="Active">Active</option>
-            <option value="Inactive">Inactive</option>
-          </select>
-        </div>
+            <label className="block text-gray-900">Status</label>
+            <select
+              name="status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+              className="border rounded w-full py-2 px-3 bg-gray-50 text-black"
+              required
+            >
+              <option value="" disabled>
+                Select Status
+              </option>
+              <option value="Active">Active</option>
+              <option value="Inactive">Inactive</option>
+            </select>
+          </div>
 
           {/* Buttons Section */}
           <div className="flex justify-end space-x-4">
